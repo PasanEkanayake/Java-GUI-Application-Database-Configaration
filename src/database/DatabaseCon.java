@@ -277,9 +277,7 @@ public class DatabaseCon extends javax.swing.JFrame {
             
         }
         catch(Exception ex){
-            
             JOptionPane.showMessageDialog(this, ex);
-            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
