@@ -65,13 +65,13 @@ public class DatabaseCon extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtname = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        chk1 = new javax.swing.JCheckBox();
+        psf = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 51));
@@ -81,6 +81,12 @@ public class DatabaseCon extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Rockwell", 1, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
         jLabel1.setText("Database Connectivity");
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -121,16 +127,47 @@ public class DatabaseCon extends javax.swing.JFrame {
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 0, 153));
         jButton3.setText("Delete Data");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 0, 153));
         jButton4.setText("Search");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 0, 153));
         jButton5.setText("Grid View");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
-        jCheckBox1.setText("Show/Hide");
+        chk1.setText("Show/Hide");
+        chk1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk1ActionPerformed(evt);
+            }
+        });
+
+        psf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                psfActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -150,14 +187,14 @@ public class DatabaseCon extends javax.swing.JFrame {
                             .addComponent(txtno))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(83, 83, 83)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(113, 113, 113)
-                                .addComponent(jCheckBox1))))
+                                .addComponent(chk1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(psf, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -188,10 +225,10 @@ public class DatabaseCon extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox1))
+                        .addGap(40, 40, 40)
+                        .addComponent(psf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chk1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(126, 126, 126)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -267,6 +304,113 @@ public class DatabaseCon extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try{
+            
+            Class.forName("com.mysql.jdbc.Driver");
+            sqlConn = DriverManager.getConnection(dataConn, username, password);
+            pst = sqlConn.prepareStatement("DELETE FROM dbtable WHERE no=?");
+            pst.setString(1, txtno.getText());
+            
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Record deleted successfully.");
+            
+        }
+        catch(Exception ex){
+            
+            JOptionPane.showMessageDialog(this, ex);
+            
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try{
+            
+            Class.forName("com.mysql.jdbc.Driver");
+            sqlConn = DriverManager.getConnection(dataConn, username, password);
+            pst = sqlConn.prepareStatement("select no, sname from dbtable WHERE no=?");
+            int no = Integer.parseInt(txtno.getText());
+            pst.setInt(1, no);
+            rs = pst.executeQuery();
+            
+            if(rs.next() == false){
+                
+                JOptionPane.showMessageDialog(this, "Record not found.");
+                txtno.setText("");
+                txtname.setText("");
+                
+            }
+            else{
+                
+                txtname.setText(rs.getString("sname"));
+                
+            }
+            
+        }
+        catch(Exception ex){
+            
+            JOptionPane.showMessageDialog(this, "Database connection failed.");
+            
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    public void search(String str){
+        
+        DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter <DefaultTableModel> trs = new TableRowSorter <> (tblModel);
+        jTable1.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter(str));
+        
+    }
+    
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        try{
+            
+            Class.forName("com.mysql.jdbc.Driver");
+            sqlConn = DriverManager.getConnection(dataConn, username, password);
+            pst = sqlConn.prepareCall("select * from dbtable");
+            rs = pst.executeQuery();
+            
+            while (rs.next()){
+                
+                String no = String.valueOf(rs.getInt("no"));
+                String sname = rs.getString("sname");
+                String tbData[] = {no, sname};
+                DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+                tblModel.addRow(tbData);
+                
+            }
+            
+        }
+        catch(Exception ex){
+            
+            JOptionPane.showMessageDialog(this, "Database connection failed.");
+            
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+        jButton5.setEnabled(false);
+    }//GEN-LAST:event_jButton5MouseClicked
+
+    private void chk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk1ActionPerformed
+        if(chk1.isSelected()){
+            psf.setEchoChar((char) 0);
+        }
+        else{
+            psf.setEchoChar('*');
+        }
+    }//GEN-LAST:event_chk1ActionPerformed
+
+    private void psfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_psfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_psfActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        String SearchString = jTextField1.getText();
+        search(SearchString);
+    }//GEN-LAST:event_jTextField1KeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -303,12 +447,12 @@ public class DatabaseCon extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox chk1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -316,7 +460,7 @@ public class DatabaseCon extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JPasswordField psf;
     private javax.swing.JTextField txtname;
     private javax.swing.JTextField txtno;
     // End of variables declaration//GEN-END:variables
