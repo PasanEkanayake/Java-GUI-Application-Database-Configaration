@@ -273,7 +273,7 @@ public class DatabaseCon extends javax.swing.JFrame {
             pst.setString(2, txtname.getText());
             
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Record added successfully.");
+            JOptionPane.showMessageDialog(this, "Record ADDED successfully.");
             
         }
         catch(Exception ex){
@@ -292,7 +292,7 @@ public class DatabaseCon extends javax.swing.JFrame {
             pst.setString(3, txtno.getText());
             
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Record updated successfully.");
+            JOptionPane.showMessageDialog(this, "Record UPDATED successfully.");
             
         }
         catch(Exception ex){
@@ -311,7 +311,7 @@ public class DatabaseCon extends javax.swing.JFrame {
             pst.setString(1, txtno.getText());
             
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Record deleted successfully.");
+            JOptionPane.showMessageDialog(this, "Record DELETED successfully.");
             
         }
         catch(Exception ex){
