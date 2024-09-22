@@ -332,23 +332,17 @@ public class DatabaseCon extends javax.swing.JFrame {
             rs = pst.executeQuery();
             
             if(rs.next() == false){
-                
                 JOptionPane.showMessageDialog(this, "Record not found.");
                 txtno.setText("");
                 txtname.setText("");
-                
             }
             else{
-                
                 txtname.setText(rs.getString("sname"));
-                
             }
             
         }
         catch(Exception ex){
-            
             JOptionPane.showMessageDialog(this, "Database connection failed.");
-            
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
